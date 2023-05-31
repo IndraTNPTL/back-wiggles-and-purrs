@@ -3,12 +3,12 @@ const { Schema, model } = require("mongoose");
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
-    Firstname: {
+    firstname: {
       type: String,
       required: [true, "Firstname is required."],
     },
 
-    Lastname: {
+    lastname: {
       type: String,
       required: [true, "Lastname is required."],
     },
@@ -32,10 +32,9 @@ const userSchema = new Schema(
       default: "user",
     },
   },
-  {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
-    timestamps: { createdAt: true, updatedAt: false },
-  }
+
+  // this second object adds extra properties: `createdAt` and `updatedAt`
+  { timestamps: true }
 );
 
 const User = model("User", userSchema);

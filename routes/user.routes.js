@@ -4,33 +4,29 @@ const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
 const AdoptionApplication = require("../models/adoptionApplication.model");
 
-// Define your routes here
-
-// User Routes
-
 // Create a new user
 
-router.post("/users", async (req, res) => {
+router.post("/users", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
     res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 });
 
 // Get all users
-router.get("/users", async (req, res) => {
+router.get("/users", async (req, res, next) => {
   try {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
 // Get a specific user by ID
-router.get("/users/:id", async (req, res) => {
+router.get("/users/:id", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     if (user) {
@@ -39,12 +35,12 @@ router.get("/users/:id", async (req, res) => {
       res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
 // Update a user
-router.put("users/:id", async (req, res) => {
+router.put("users/:id", async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -55,12 +51,12 @@ router.put("users/:id", async (req, res) => {
       res.status(404).json({ error: "Update not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
 // Delete a user
-route.delete("/users/:id", async (req, res) => {
+router.delete("/users/:id", async (req, res, next) => {
   try {
     const user = await User.findByIdAndDelete(req.pqrams.id);
     if (user) {
@@ -69,6 +65,6 @@ route.delete("/users/:id", async (req, res) => {
       res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
