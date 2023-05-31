@@ -10,65 +10,65 @@ const AdoptionApplication = require("../models/adoptionApplication.model");
 
 // Create a new user
 
-router.post("/users", async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+router.post("/", async (req, res) => {
+	try {
+		const user = await User.create(req.body);
+		res.status(201).json(user);
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
 });
 
 // Get all users
-router.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+router.get("/", async (req, res) => {
+	try {
+		const users = await User.find();
+		res.json(users);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
 // Get a specific user by ID
-router.get("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ error: "User not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+router.get("/:id", async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+		if (user) {
+			res.json(user);
+		} else {
+			res.status(404).json({ error: "User not found" });
+		}
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
 // Update a user
-router.put("users/:id", async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ error: "Update not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+router.put("/:id", async (req, res) => {
+	try {
+		const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+		});
+		if (user) {
+			res.json(user);
+		} else {
+			res.status(404).json({ error: "Update not found" });
+		}
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
 
 // Delete a user
-route.delete("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.pqrams.id);
-    if (user) {
-      res.sendStatus(204);
-    } else {
-      res.status(404).json({ error: "User not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+route.delete("/:id", async (req, res) => {
+	try {
+		const user = await User.findByIdAndDelete(req.pqrams.id);
+		if (user) {
+			res.sendStatus(204);
+		} else {
+			res.status(404).json({ error: "User not found" });
+		}
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 });
