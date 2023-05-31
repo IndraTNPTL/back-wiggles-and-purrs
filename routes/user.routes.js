@@ -5,7 +5,6 @@ const Pet = require("../models/pet.model");
 const AdoptionApplication = require("../models/adoptionApplication.model");
 
 // Create a new user
-
 router.post("/users", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
@@ -67,4 +66,3 @@ router.delete("/users/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});

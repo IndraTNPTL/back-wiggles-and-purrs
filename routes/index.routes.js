@@ -1,8 +1,10 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 router.get("/", (req, res, next) => {
-  res.json("All good in here");
+	res.json({ success: true, name: "back-wiggles-and-purrs" });
 });
+
+router.use("/users", usersRoutes);
+router.use("/pets", petsRoutes);
 
 module.exports = router;
