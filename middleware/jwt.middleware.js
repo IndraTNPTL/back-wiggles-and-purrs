@@ -1,29 +1,33 @@
-const { expressjwt: jwt } = require("express-jwt");
+const jsonWebToken = require("jsonwebtoken");
+const User = require("../models/User.model");
 
-// Instantiate the JWT token validation middleware
-const isAuthenticated = jwt({
-  secret: process.env.TOKEN_SECRET,
-  algorithms: ["HS256"],
-  requestProperty: "payload",
-  getToken: getTokenFromHeaders,
-});
-
-// Function used to extract the JWT token from the request's 'Authorization' Headers
-function getTokenFromHeaders(req) {
-  // Check if the token is available on the request Headers
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer"
-  ) {
-    // Get the encoded token string and return it
-    const token = req.headers.authorization.split(" ")[1];
-    return token;
-  }
-
-  return null;
-}
-
-// Export the middleware so that we can use it to create protected routes
-module.exports = {
-  isAuthenticated,
+const isAuthenticated = async (req, res, next) => {
+	let token = req.headers.authorization;
+	if (!token) {
+		return res.status(400).json({ message: "No token found!" });
+	}
+	token = token.replace("Bearer ", "");
+	const userToken = jsonWebToken.verify(token, process.env.TOKEN_SECRET);
+	console.log(userToken);
+	try {
+		const user = await User.findOne({ username: userToken.username });
+		if (!user) {
+			return res.status(400).json({ message: "Invalid token" });
+		}
+		req.user = user;
+		// Once everything went well, go to the next middleware
+		next();
+	} catch (error) {
+		return res.status(401).json({ message: "Invalid token" });
+	}
 };
+
+const isAdmin = (req, res, next) => {
+	if (req.user.role === "admin") {
+		next();
+	} else {
+		return res.status(401).json({ message: "Denied !" });
+	}
+};
+
+module.exports = { isAuthenticated, isAdmin };
