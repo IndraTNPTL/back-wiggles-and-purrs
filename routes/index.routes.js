@@ -4,7 +4,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const usersRoutes = require("../routes/user.routes");
 const petsRoutes = require("../routes/pet.routes");
-const FoundAPetForm = require("./FoundAPetForm.routes");
+const FoundAPet = require("./FoundAPet.routes");
 
 router.get("/", (req, res, next) => {
 	res.json({ success: true, name: "back-wiggles-and-purrs" });

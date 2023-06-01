@@ -7,16 +7,16 @@ const Pet = require("../models/pet.model");
 const FoundAPet = require("../models/FoundAPet.model");
 
 // Create a new Found a pet form
-router.post("/", async (req, res, next) => {
-	try {
-		const application = await FoundAPet.create(req.body);
-		res.status(201).json(application);
-	} catch (error) {
-		next(error);
-	}
-});
+// router.post("/", async (req, res, next) => {
+// 	try {
+// 		const application = await FoundAPet.create(req.body);
+// 		res.status(201).json(application);
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-// Router.post('/somewhere', isAuthenticcated, (req, res, nextt) => {
+// TODO Router.post('/somewhere', isAuthenticcated, (req, res, nextt) => {
 //   const pet = await Pet.create(thing)
 //   const newApplication = await FoundAPetForm({reporter: req.user._id, pet: pet._id})
 //   rtes.send('cool')
