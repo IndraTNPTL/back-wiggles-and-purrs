@@ -4,22 +4,28 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const FoundAPetForm = require("../models/FoundAPetForm.model");
+const FoundAPet = require("../models/FoundAPet.model");
 
 // Create a new Found a pet form
 router.post("/", async (req, res, next) => {
 	try {
-		const application = await FoundAPetForm.create(req.body);
+		const application = await FoundAPet.create(req.body);
 		res.status(201).json(application);
 	} catch (error) {
 		next(error);
 	}
 });
 
+// Router.post('/somewhere', isAuthenticcated, (req, res, nextt) => {
+//   const pet = await Pet.create(thing)
+//   const newApplication = await FoundAPetForm({reporter: req.user._id, pet: pet._id})
+//   rtes.send('cool')
+// })
+
 // Get all Found a pet forms
 router.get("/", isAdmin, async (req, res, next) => {
 	try {
-		const applications = await FoundAPetForm.find();
+		const applications = await FoundAPet.find();
 		res.json(applications);
 	} catch (error) {
 		next(error);
@@ -29,7 +35,7 @@ router.get("/", isAdmin, async (req, res, next) => {
 // Get a specific Found a pet form by ID
 router.get("/:id", async (req, res, next) => {
 	try {
-		const application = await FoundAPetForm.findById(req.params.id);
+		const application = await FoundAPet.findById(req.params.id);
 		if (application) {
 			res.json(application);
 		} else {
@@ -43,7 +49,7 @@ router.get("/:id", async (req, res, next) => {
 // Update an Found a pet form
 router.patch("/:id", async (req, res, next) => {
 	try {
-		const application = await FoundAPetForm.findByIdAndUpdate(
+		const application = await FoundAPet.findByIdAndUpdate(
 			req.params.id,
 			req.body,
 			{ new: true }
@@ -61,9 +67,7 @@ router.patch("/:id", async (req, res, next) => {
 // Delete a Found a pet form
 router.delete("/:id", async (req, res, next) => {
 	try {
-		const application = await FoundAPetForm.findByIdAndDelete(
-			req.params.id
-		);
+		const application = await FoundAPet.findByIdAndDelete(req.params.id);
 		if (application) {
 			res.sendStatus(204);
 		} else {

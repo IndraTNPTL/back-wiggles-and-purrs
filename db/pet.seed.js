@@ -1,7 +1,3 @@
-require("dotenv").config({ path: "../.env" });
-
-require("../db/index");
-
 const mongoose = require("mongoose");
 const MONGODB_URI = "mongodb://127.0.0.1:27017/back-wiggles-and-purrs";
 
@@ -445,6 +441,7 @@ mongoose
 			process.exit();
 		} catch (error) {
 			console.error("Unable to create new pets.");
+			console.log(error);
 		}
 	})
 	.catch((err) => {
