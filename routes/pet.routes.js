@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const AdoptionApplication = require("../models/adoptionApplication.model");
+const FoundAPetForm = require("../models/FoundAPetForm.model");
 const { isAdmin } = require("../middleware/jwt.middleware");
 
 // Create a new pet
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // Update a pet
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", isAdmin, async (req, res, next) => {
 	try {
 		const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {
 			new: true,
