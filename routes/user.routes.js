@@ -4,7 +4,7 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const AdoptionApplication = require("../models/adoptionApplication.model");
+const FoundAPetForm = require("../models/FoundAPetForm.model");
 
 // Create a new user
 router.post("/", async (req, res, next) => {
@@ -17,7 +17,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // Get all users
-router.get("/", async (req, res, next) => {
+router.get("/", isAdmin, async (req, res, next) => {
 	try {
 		const users = await User.find();
 		res.json(users);
@@ -27,7 +27,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // Get a specific user by ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", isAdmin, async (req, res, next) => {
 	try {
 		const user = await User.findById(req.params.id);
 		if (user) {

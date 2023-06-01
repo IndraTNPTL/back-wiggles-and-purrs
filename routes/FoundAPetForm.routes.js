@@ -4,46 +4,46 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const AdoptionApplication = require("../models/adoptionApplication.model");
+const FoundAPetForm = require("../models/FoundAPetForm.model");
 
-// Create a new adoption application
+// Create a new Found a pet form
 router.post("/", async (req, res, next) => {
 	try {
-		const application = await AdoptionApplication.create(req.body);
+		const application = await FoundAPetForm.create(req.body);
 		res.status(201).json(application);
 	} catch (error) {
 		next(error);
 	}
 });
 
-// Get all adoption applications
-router.get("/", async (req, res, next) => {
+// Get all Found a pet forms
+router.get("/", isAdmin, async (req, res, next) => {
 	try {
-		const applications = await AdoptionApplication.find();
+		const applications = await FoundAPetForm.find();
 		res.json(applications);
 	} catch (error) {
 		next(error);
 	}
 });
 
-// Get a specific adoption application by ID
+// Get a specific Found a pet form by ID
 router.get("/:id", async (req, res, next) => {
 	try {
-		const application = await AdoptionApplication.findById(req.params.id);
+		const application = await FoundAPetForm.findById(req.params.id);
 		if (application) {
 			res.json(application);
 		} else {
-			res.status(404).json({ error: "Adoption application not found" });
+			res.status(404).json({ error: "Found a Pet form not found" });
 		}
 	} catch (error) {
 		next(error);
 	}
 });
 
-// Update an adoption application
+// Update an Found a pet form
 router.patch("/:id", async (req, res, next) => {
 	try {
-		const application = await AdoptionApplication.findByIdAndUpdate(
+		const application = await FoundAPetForm.findByIdAndUpdate(
 			req.params.id,
 			req.body,
 			{ new: true }
@@ -51,23 +51,23 @@ router.patch("/:id", async (req, res, next) => {
 		if (application) {
 			res.json(application);
 		} else {
-			res.status(404).json({ error: "Adoption application not found" });
+			res.status(404).json({ error: "Found a pet form not found" });
 		}
 	} catch (error) {
 		next(error);
 	}
 });
 
-// Delete an adoption application
+// Delete a Found a pet form
 router.delete("/:id", async (req, res, next) => {
 	try {
-		const application = await AdoptionApplication.findByIdAndDelete(
+		const application = await FoundAPetForm.findByIdAndDelete(
 			req.params.id
 		);
 		if (application) {
 			res.sendStatus(204);
 		} else {
-			res.status(404).json({ error: "Adoption application not found" });
+			res.status(404).json({ error: "Found a pet form not found" });
 		}
 	} catch (error) {
 		next(error);
