@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const FoundAPetForm = require("../models/FoundAPetForm.model");
+const FoundAPet = require("../models/FoundAPet.model");
 const { isAdmin } = require("../middleware/jwt.middleware");
 
 // Create a new pet

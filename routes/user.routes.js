@@ -4,7 +4,7 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 
 const User = require("../models/User.model");
 const Pet = require("../models/pet.model");
-const FoundAPetForm = require("../models/FoundAPetForm.model");
+const FoundAPet = require("../models/FoundAPet.model");
 
 // Create a new user
 router.post("/", async (req, res, next) => {
