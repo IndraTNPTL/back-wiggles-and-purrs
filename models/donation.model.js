@@ -5,10 +5,11 @@ const { Schema, model } = require("mongoose");
 const donationSchema = new Schema(
 	{
 		// Define the 'donor' field as an ObjectId referencing the 'User' collection
-		donor: {
+		donorId: {
 			type: Schema.Types.ObjectId,
 			ref: "User",
 		},
+
 		// Define the 'amount' field as a Number with enum validation for the values 5, 10, 50, and 100
 		amount: {
 			type: Number,

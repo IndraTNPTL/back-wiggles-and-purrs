@@ -4,10 +4,11 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const usersRoutes = require("../routes/user.routes");
 const petsRoutes = require("../routes/pet.routes");
-const FoundAPet = require("./FoundAPet.routes");
+const foundAPetRoutes = require("../routes/FoundAPet.routes");
+const donationRoutes = require("../routes/donation.routes");
 
 router.get("/", (req, res, next) => {
-  res.json({ success: true, name: "back-wiggles-and-purrs" });
+	res.json({ success: true, name: "back-wiggles-and-purrs" });
 });
 
 // !User has to be authenticated to have access to the rest of the app
@@ -15,6 +16,7 @@ router.use(isAuthenticated);
 
 router.use("/users", usersRoutes);
 router.use("/pets", petsRoutes);
-router.use("/found-a-pet", FoundAPet);
+router.use("/found-a-pet", foundAPetRoutes);
+router.use("/donation", donationRoutes);
 
 module.exports = router;
