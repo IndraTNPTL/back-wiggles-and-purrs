@@ -44,5 +44,17 @@ const isAdmin = (req, res, next) => {
 	}
 };
 
+// Make routes case-insensitives
+function lowerCaseParams(req, res, next) {
+	const lowerCasedParams = Object.fromEntries(
+		Object.entries(req.params).map(([key, value]) => [
+			key,
+			value.toLowerCase(),
+		])
+	);
+	req.params = lowerCasedParams;
+	next();
+}
+
 // Export the middlewares for use in other modules
-module.exports = { isAuthenticated, isAdmin };
+module.exports = { isAuthenticated, isAdmin, lowerCaseParams };
