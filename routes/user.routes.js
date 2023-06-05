@@ -38,6 +38,22 @@ router.get("/:id", isAdmin, async (req, res, next) => {
 	}
 });
 
+// Allow user to update their own profile
+router.put("/:id", async (req, res, next) => {
+	try {
+		const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+		});
+		if (user) {
+			res.json(user);
+		} else {
+			res.status(404).json({ error: "User not found" });
+		}
+	} catch (error) {
+		next(error);
+	}
+});
+
 // Update a user
 router.put("/:id", async (req, res, next) => {
 	try {
@@ -48,6 +64,20 @@ router.put("/:id", async (req, res, next) => {
 			res.json(user);
 		} else {
 			res.status(404).json({ error: "Update not found" });
+		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Allow users to delete their own profile
+router.delete("/:id", async (req, res, next) => {
+	try {
+		const user = await User.findByIdAndDelete(req.params.id);
+		if (user) {
+			res.sendStatus(204);
+		} else {
+			res.status(404).json({ error: "User not found" });
 		}
 	} catch (error) {
 		next(error);
