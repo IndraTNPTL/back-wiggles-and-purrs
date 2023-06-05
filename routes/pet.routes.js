@@ -19,8 +19,11 @@ router.get("/admin", isAdmin, async (req, res, next) => {
 router.post("/", isAdmin, async (req, res, next) => {
 	try {
 		const pet = await Pet.create(req.body);
-
-		res.status(201).json(pet);
+		if (pet) {
+			res.status(201).json(pet);
+		} else {
+			res.status(404).json({ error: "Couldn't create pet" });
+		}
 	} catch (error) {
 		next(error);
 	}
@@ -51,6 +54,15 @@ router.delete("/:id", isAdmin, lowerCaseParams, async (req, res, next) => {
 		} else {
 			res.status(404).json({ error: "Pet not found" });
 		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.get("/status/:status", isAdmin, async (req, res, next) => {
+	try {
+		const pets = await Pet.find({ status: req.params.status });
+		res.json(pets);
 	} catch (error) {
 		next(error);
 	}
@@ -206,6 +218,57 @@ router.get("/location/:location", lowerCaseParams, async (req, res, next) => {
 		} else {
 			res.status(404).json({ error: "Pets location not found" });
 		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Get pets using filters with multiple criteria
+router.get("/", async (req, res, next) => {
+	try {
+		const filters = {};
+		if (req.query.breed) filters.breed = req.query.breed;
+		if (req.query.gender) filters.gender = req.query.gender;
+		if (req.query.rangeAge) filters.rangeAge = req.query.rangeAge;
+		if (req.query.size) filters.size = req.query.size;
+		if (req.query.color) filters.color = req.query.color;
+		if (req.query.location) filters.location = req.query.location;
+		filters.available = true;
+
+		const pets = await Pet.find(filters);
+		if (pets) {
+			res.json(pets);
+		} else {
+			res.status(404).json({ error: "Pets not found" });
+		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Allows users to assign a pet to themselves, useful when a user decides to adopt a pet
+router.post("/assign/:id", async (req, res, next) => {
+	try {
+		const pet = await Pet.findById(req.params.id);
+		if (!pet) {
+			res.status(404).json({ error: "Pet not found" });
+		} else {
+			await Pet.updateOne(
+				{ _id: pet._id },
+				{ available: false, owner: req.user._id }
+			);
+			res.status(200).json({ message: "Pet has been assigned to you" });
+		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Allows to get a list of pets a user owns
+router.get("/owned", async (req, res, next) => {
+	try {
+		const ownedPets = await Pet.find({ owner: req.user._id });
+		res.json(ownedPets);
 	} catch (error) {
 		next(error);
 	}
