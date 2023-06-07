@@ -6,7 +6,7 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 const { lowerCaseParams } = require("../middleware/jwt.middleware");
 
 // Get all pets (Admin only)
-router.get("/admin", isAdmin, async (req, res, next) => {
+router.get("/", isAdmin, async (req, res, next) => {
 	try {
 		const pets = await Pet.find();
 		res.json(pets);

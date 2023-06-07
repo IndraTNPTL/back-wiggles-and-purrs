@@ -17,22 +17,31 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
+	console.log(req.body);
 	const { email, password, name } = req.body;
 
-	// Check if email or password or name are provided as empty strings
+	// Check if email, password, or name are missing
 	if (email === "" || password === "" || name === "") {
-		res.status(400).json({ message: "Provide email, password and name" });
+		const missingElement =
+			email === ""
+				? "an email"
+				: password === ""
+				? "a password"
+				: name === ""
+				? "a name"
+				: "";
+		res.status(400).json({ message: `Please provide ${missingElement}!` });
+		return;
+	}
+
+	//? This regular expression check that the email is of a valid format
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+	if (!emailRegex.test(email)) {
+		res.status(400).json({ message: "Provide a valid email address." });
 		return;
 	}
 
 	//! To decomment after test
-	//? This regular expression check that the email is of a valid format
-	// const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-	// if (!emailRegex.test(email)) {
-	// 	res.status(400).json({ message: "Provide a valid email address." });
-	// 	return;
-	// }
-
 	//? This regular expression checks password for special characters and minimum length
 	// const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 	// if (!passwordRegex.test(password)) {
@@ -89,7 +98,7 @@ router.post("/login", (req, res, next) => {
 
 	// Check if email or password are provided as empty string
 	if (email === "" || password === "") {
-		res.status(400).json({ message: "Provide email and password." });
+		res.status(400).json({ message: "Missing  or wrong credentials." });
 		return;
 	}
 
@@ -139,7 +148,7 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 	console.log(`req.payload`, req.payload);
 
 	// Send back the token payload object containing the user data
-	res.status(200).json(req.payload);
+	res.status(200).json(req.user);
 });
 
 module.exports = router;
