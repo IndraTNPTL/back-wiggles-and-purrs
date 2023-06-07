@@ -7,9 +7,9 @@ const Pet = require("../models/pet.model");
 const pets = [
   {
     name: "Prickles",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "North African Hedgehog",
-    rangeAge: "1 - 4 years",
+    rangeAge: "1 - 2 years",
     gender: "Female",
     size: "Small",
     color: "Brown",
@@ -22,9 +22,9 @@ const pets = [
   },
   {
     name: "Spike",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "Long-Eared Hedgehog",
-    rangeAge: "1 - 3 years",
+    rangeAge: "1 - 2 years",
     gender: "Male",
     size: "Small",
     color: "Salt and Pepper",
@@ -37,9 +37,9 @@ const pets = [
   },
   {
     name: "Hazel",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "Northern white-breasted hedgehog",
-    rangeAge: " 1 - 4 years",
+    rangeAge: "1 - 2 years",
     gender: "Female",
     size: "Small",
     color: "Grey",
@@ -53,9 +53,9 @@ const pets = [
 
   {
     name: "Quillbert",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "European Hedgehog",
-    rangeAge: "2 - 4 years",
+    rangeAge: "2 - 5 years",
     gender: "Male",
     size: "Small",
     olor: "Dark Brown",
@@ -68,9 +68,9 @@ const pets = [
   },
   {
     name: "Poppy",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "Desert hedgehog",
-    rangeAge: "1 - 3 years",
+    rangeAge: "1 - 2 years",
     gender: "Female",
     size: "Small",
     color: "Light Brown",
@@ -83,7 +83,7 @@ const pets = [
   },
   {
     name: "Gizmo",
-    specie: "Hedgehog",
+    specie: "hedgehog",
     breed: "Somali Hedgehog",
     rangeAge: "1 - 2 years",
     gender: "Male",
