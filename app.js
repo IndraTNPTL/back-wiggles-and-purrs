@@ -1,11 +1,3 @@
-// ℹ️ // Import the dotenv package which allows access to environment variables/settings.
-// https://www.npmjs.com/package/dotenv
-require("dotenv").config();
-
-// Import and run the database connection configuration.
-// ℹ️ Connects to the database
-require("./db");
-
 // Import the express package which is a Node.js web application framework.
 // It simplifies handling HTTP requests.
 // Handles http requests (express is node js framework)
@@ -14,6 +6,19 @@ const express = require("express");
 
 // Create an instance of an Express application.
 const app = express();
+
+// CORS
+const cors = require("cors");
+
+// ℹ️ // Import the dotenv package which allows access to environment variables/settings.
+// https://www.npmjs.com/package/dotenv
+require("dotenv").config();
+
+// Import and run the database connection configuration.
+// ℹ️ Connects to the database
+require("./db");
+
+app.use(cors());
 
 // Import and run the middleware configuration.
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware

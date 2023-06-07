@@ -6,12 +6,13 @@ const User = require("../models/User.model");
 const isAuthenticated = async (req, res, next) => {
 	// Extract the token from the request headers
 	let token = req.headers.authorization;
+	console.log(token);
 
 	// If no token is found, return an error message
 	if (!token) {
 		return res.status(400).json({ message: "No token found!" });
 	}
-	// Remove the 'Bearer ' prefix from the token
+	// Remove the 'Bearer ' prefix from the token because Bearer is a convention term to identify the token's bearer. It is not part of the token body
 	token = token.replace("Bearer ", "");
 
 	// Verify the token using the secret key
