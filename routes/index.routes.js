@@ -4,6 +4,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 const usersRoutes = require("../routes/user.routes");
 const petsRoutes = require("../routes/pet.routes");
+const adoptionRoutes = require("../routes/Adoption.routes");
 const foundAPetRoutes = require("../routes/FoundAPet.routes");
 const donationRoutes = require("../routes/donation.routes");
 const authRoutes = require("../routes/auth.routes");
@@ -23,6 +24,6 @@ router.use("/pets", petsRoutes);
 router.use("/found-a-pet", foundAPetRoutes);
 router.use("/donation", donationRoutes);
 router.use("/favorites", favoritesRoutes);
-// router.use("/hello");
+router.use("/adopt-a-pet", adoptionRoutes);
 
 module.exports = router;
