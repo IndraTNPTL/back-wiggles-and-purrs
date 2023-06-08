@@ -5,26 +5,27 @@ const { isAdmin } = require("../middleware/jwt.middleware");
 // Create a new adoption application
 router.post("/", async (req, res, next) => {
 	try {
-		const { adopter, pet, userName, userEmail } = req.body;
+		const { adopter, pet, userName, userEmail, petId } = req.body;
 
 		// Check if the adopter and pet already exist in the database
-		const adopterRecord = await Adoption.findOne({ _id: adopter });
-		const petRecord = await Adoption.findOne({ _id: pet });
-
-		if (!adopterRecord || !petRecord) {
-			return res.status(400).send("Adopter or Pet not found");
-		}
+		// const adopterRecord = await Adoption.findOne({ adopter: req.user._id });
+		// const petRecord = await Adoption.findOne({ pet: petId });
+		// console.log(adopterRecord);
+		// console.log(petRecord);
+		// if (!adopterRecord || petRecord) {
+		// 	return res.status(400).send("Adopter or Pet not found");
+		// }
 
 		// Create a new adoption record
 		const newAdoption = new Adoption({
-			adopter: adopterRecord._id,
-			pet: petRecord._id,
+			adopter: req.user._id,
+			pet: petId,
 			status: "pending",
 			userName: userName,
 			userEmail: userEmail,
 		});
 
-		await newAdoption.create();
+		await newAdoption.save();
 		res.status(201).send("Adoption record created");
 	} catch (error) {
 		res.status(500).send("Error creating adoption record");
