@@ -20,6 +20,7 @@ const petSchema = new Schema(
 				"Pomeranian",
 				"Beagle",
 				"Dachshund",
+				"Berger Belge",
 				"Pug",
 				"Poodle",
 				"Bichon Frise",
