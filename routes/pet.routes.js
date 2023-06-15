@@ -29,12 +29,48 @@ router.post("/", isAdmin, async (req, res, next) => {
 	}
 });
 
-// Update a pet (admin only)
-router.put("/:id", isAdmin, lowerCaseParams, async (req, res, next) => {
+// // Update a pet (admin only)
+// router.put("/:id", isAdmin, lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {
+// 			new: true,
+// 		});
+// 		if (pet) {
+// 			res.json(pet);
+// 		} else {
+// 			res.status(404).json({ error: "Pet not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
+
+// // Update a pet (admin only)
+// router.put("/:id", isAdmin, async (req, res, next) => {
+// 	try {
+// 		const pet = await Pet.findByIdAndUpdate(
+// 			req.params.id,
+// 			{ ...req.body, available: true }, // Update the availability to true
+// 			{ new: true }
+// 		);
+// 		if (pet) {
+// 			res.json(pet);
+// 		} else {
+// 			res.status(404).json({ error: "Pet not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
+
+// Update a pet availability (admin only)
+router.put("/:id", async (req, res, next) => {
 	try {
-		const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-		});
+		const pet = await Pet.findByIdAndUpdate(
+			req.params.id,
+			{ available: true },
+			{ new: true }
+		);
 		if (pet) {
 			res.json(pet);
 		} else {
@@ -136,92 +172,92 @@ router.get("/breed/:breed", lowerCaseParams, async (req, res, next) => {
 	}
 });
 
-// Get a specific pet by Range Age
-router.get("/rangeAge/:rangeAge", lowerCaseParams, async (req, res, next) => {
-	try {
-		const pets = await Pet.find({
-			available: true,
-			rangeAge: req.params.rangeAge,
-		});
-		if (pets) {
-			res.json(pets);
-		} else {
-			res.status(404).json({
-				error: "No available pets in choosen range age",
-			});
-		}
-	} catch (error) {
-		next(error);
-	}
-});
+// // Get a specific pet by Range Age
+// router.get("/rangeAge/:rangeAge", lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pets = await Pet.find({
+// 			available: true,
+// 			rangeAge: req.params.rangeAge,
+// 		});
+// 		if (pets) {
+// 			res.json(pets);
+// 		} else {
+// 			res.status(404).json({
+// 				error: "No available pets in choosen range age",
+// 			});
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-// Get a specific pet by gender
-router.get("/gender/:gender", lowerCaseParams, async (req, res, next) => {
-	try {
-		const pets = await Pet.find({
-			available: true,
-			gender: req.params.gender,
-		});
-		if (pets) {
-			res.json(pets);
-		} else {
-			res.status(404).json({ error: "Pets gender not found" });
-		}
-	} catch (error) {
-		next(error);
-	}
-});
+// // Get a specific pet by gender
+// router.get("/gender/:gender", lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pets = await Pet.find({
+// 			available: true,
+// 			gender: req.params.gender,
+// 		});
+// 		if (pets) {
+// 			res.json(pets);
+// 		} else {
+// 			res.status(404).json({ error: "Pets gender not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-// Get a specific pet by color
-router.get("/color/:color", lowerCaseParams, async (req, res, next) => {
-	try {
-		const pets = await Pet.find({
-			available: true,
-			color: req.params.color,
-		});
-		if (pets) {
-			res.json(pets);
-		} else {
-			res.status(404).json({ error: "Pets color not found" });
-		}
-	} catch (error) {
-		next(error);
-	}
-});
+// // Get a specific pet by color
+// router.get("/color/:color", lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pets = await Pet.find({
+// 			available: true,
+// 			color: req.params.color,
+// 		});
+// 		if (pets) {
+// 			res.json(pets);
+// 		} else {
+// 			res.status(404).json({ error: "Pets color not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-// Get a specific pet by size
-router.get("/size/:size", lowerCaseParams, async (req, res, next) => {
-	try {
-		const pets = await Pet.find({
-			available: true,
-			size: req.params.size,
-		});
-		if (pets) {
-			res.json(pets);
-		} else {
-			res.status(404).json({ error: "Pet size not found" });
-		}
-	} catch (error) {
-		next(error);
-	}
-});
+// // Get a specific pet by size
+// router.get("/size/:size", lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pets = await Pet.find({
+// 			available: true,
+// 			size: req.params.size,
+// 		});
+// 		if (pets) {
+// 			res.json(pets);
+// 		} else {
+// 			res.status(404).json({ error: "Pet size not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-// Get a specific pet by location
-router.get("/location/:location", lowerCaseParams, async (req, res, next) => {
-	try {
-		const pets = await Pet.find({
-			available: true,
-			location: req.params.location,
-		});
-		if (pets) {
-			res.json(pets);
-		} else {
-			res.status(404).json({ error: "Pets location not found" });
-		}
-	} catch (error) {
-		next(error);
-	}
-});
+// // Get a specific pet by location
+// router.get("/location/:location", lowerCaseParams, async (req, res, next) => {
+// 	try {
+// 		const pets = await Pet.find({
+// 			available: true,
+// 			location: req.params.location,
+// 		});
+// 		if (pets) {
+// 			res.json(pets);
+// 		} else {
+// 			res.status(404).json({ error: "Pets location not found" });
+// 		}
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
 // Get pets using filters with multiple criteria
 router.get("/", async (req, res, next) => {

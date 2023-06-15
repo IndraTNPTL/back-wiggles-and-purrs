@@ -24,14 +24,22 @@ router.post("/approve/:id", isAdmin, async function (req, res, next) {
 	try {
 		// Get the FoundAPet document by ID
 		const foundAPet = await FoundAPet.findByIdAndUpdate(
-			req.params.id,
+			req.params._id,
 			{ status: "approved" },
 			{
 				new: true,
 			}
 		);
-		if (foundAPet) {
-			console.log(foundAPet);
+		const pet = await Pet.findByIdAndUpdate(
+			req.params._id,
+			req.body,
+			{ available: "true" },
+			{
+				new: true,
+			}
+		);
+		if (foundAPet && pet) {
+			console.log(foundAPet, pet);
 			res.status(201).json({
 				message: "Your submission has been accepted",
 			});
@@ -62,6 +70,16 @@ router.post("/reject/:id", isAdmin, async function (req, res, next) {
 		} else {
 			res.status(404).json({ error: "Aplication not found" });
 		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Get all Found Pet application
+router.get("/", isAdmin, async (req, res, next) => {
+	try {
+		const foundAPet = await FoundAPet.find();
+		res.json(foundAPet);
 	} catch (error) {
 		next(error);
 	}
@@ -116,10 +134,12 @@ router.post("/approved/:id", isAdmin, async function (req, res, next) {
 	}
 });
 
-// Get all Found a pet forms (admin only)
+//! Get all Found a pet forms (admin only)
 router.get("/", isAdmin, async (req, res, next) => {
 	try {
-		const applications = await FoundAPet.find();
+		const applications = await FoundAPet.find()
+			.populate("reporter", "name")
+			.populate("pet", "name");
 		res.json(applications);
 	} catch (error) {
 		next(error);
